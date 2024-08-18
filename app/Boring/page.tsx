@@ -30,13 +30,11 @@ export default async function Amamamam() {
   return (
     <div className="bg-white px-5 py-5">
       <div className=" mx-2 my-4">
-        <ol className="grid grid-cols-2 mx-3 my-3 px-6 py-3">
+        <ol className="grid grid-cols-2 mx-3 my-3 ">
           {data.map((topic, id) => (
-            <li key={id} className="py-2 px-2 ">
+            <li key={id} className="my-2 mx-2 ">
               <h2 className="font-bold text-3xl">{topic.name}</h2>
-              <p className="italic py-1 px-1 my-1 mx-1 font-sans">
-                {topic.descr}
-              </p>
+              <p className="italic  my-1 mx-1 font-sans">{topic.descr}</p>
               <ol className="grid grid-cols-2">
                 {topic.var.map((d, _) => (
                   <li key={_}>
@@ -47,8 +45,8 @@ export default async function Amamamam() {
                       最小單位:{d.price.minunit} {"  "}克
                     </span>
                     <span>售價 : {d.price.unitprice}</span>
-                    <div className="grid grid-cols-2">
-                      <div className="my-2 py-3">
+                    <div className="flex flex-wrap">
+                      <div className="my-2  mx-3 ">
                         <Image
                           src={d.imgurl}
                           width={300}
@@ -56,7 +54,7 @@ export default async function Amamamam() {
                           alt="varpic"
                         />
                       </div>
-                      <p>{d.describe} </p>
+                      <p className="my-2  mx-3 ">{d.describe} </p>
                     </div>
                   </li>
                 ))}

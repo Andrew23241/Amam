@@ -39,11 +39,13 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
         <div className="grid gap-8 md:grid-cols-2">
           <ImageGallery images={data.images} />
           <div className="md:py-8">
-            <div className="mb-2 md:mb-3 grid grid-cols-3 place-items-end">
+            <div className="mb-2 md:mb-3 flex justify-between place-items-end">
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {data.name}
               </h2>
-              <h3>Price: {p}</h3>
+              <h3 className="font-bold italic subpixel-antialliased">
+                Estimate Price: {p} NT
+              </h3>
               <div className="flex gap-2.5">
                 <AddToBag
                   description="cdvfv"
@@ -108,7 +110,9 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               </h3>
               <ol className="grid  grid-cols-1 grid-rows-3  mx-3">
                 {data.steps.map((ing, id) => (
-                  <li className="font-medium py-1">{id + 1 + ". " + ing}</li>
+                  <li key={id} className="font-medium py-1">
+                    {id + 1 + ". " + ing}
+                  </li>
                 ))}
               </ol>
             </div>
