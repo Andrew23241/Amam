@@ -110,7 +110,7 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               </h3>
               <ol className="grid  grid-cols-1 grid-rows-3  mx-3">
                 {data.steps.map((ing, id) => (
-                  <li className="font-medium py-1">{id + 1 + ". " + ing}</li>
+                  <li key={id} className="font-medium py-1">{id + 1 + ". " + ing}</li>
                 ))}
               </ol>
             </div>
