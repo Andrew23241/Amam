@@ -44,7 +44,7 @@ export default async function Intro() {
       <div className="flex flex-col  items-center justify-between gap-8 md:flex-row">
         <div className="flex  h-12 w-96 divide-x overflow-hidden rounded-lg border ">
           {links.map((link, id) => (
-            <Link
+            <Link key={id}
               className="flex w-1/5 items-center justify-center text-base text-gray-500 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
               href={link.href}
             >
