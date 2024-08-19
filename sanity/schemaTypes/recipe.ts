@@ -107,13 +107,7 @@ export default {
         },
       ],
     },
-    {
-      title: 'Pre-typed recipes',
-      name: 'content',
-      type: 'array',
-      of: [{type: 'block'}],
-      group: 'pre',
-    },
+
     {title: 'pdf version of recipe', name: 'pdf', type: 'file', group: 'pre'},
     {
       name: 'slug',
