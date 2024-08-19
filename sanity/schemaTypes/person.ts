@@ -15,7 +15,7 @@ export default {
     },
     {
       name: 'intro',
-      type: 'string',
+      type: 'text',
       title: 'Intrduction',
     },
   ],

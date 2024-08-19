@@ -12,7 +12,7 @@ export default {
     },
     {
       name: 'describe',
-      type: 'string',
+      type: 'text',
       title: 'description of the varient',
     },
   ],

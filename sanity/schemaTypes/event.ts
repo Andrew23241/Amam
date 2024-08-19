@@ -46,7 +46,7 @@ export default {
 
     {
       name: 'review',
-      type: 'string',
+      type: 'text',
       title: 'Description of the event',
     },
 

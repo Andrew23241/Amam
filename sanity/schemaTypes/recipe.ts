@@ -4,6 +4,11 @@ export default {
   name: 'recipe',
   type: 'document',
   title: 'Recipe',
+  groups: [
+    {name: 'ingred', title: 'Ingredients'},
+    {name: 'step', title: 'Steps'},
+    {name: 'pre', title: 'edit your self'},
+  ],
   fields: [
     {name: 'name', type: 'string', title: 'Name of the Recipe'},
     {
@@ -59,6 +64,7 @@ export default {
       name: 'ingredient',
       type: 'array',
       title: 'Ingredients Require',
+      group: 'ingred',
       of: [
         {
           name: 'amount',
@@ -71,7 +77,7 @@ export default {
               title: 'link to ingredient',
               type: 'reference',
 
-              to: [{type: 'ingredients'}],
+              to: [{type: 'ingredients'}, {type: 'varients'}],
             },
             {name: 'weight', type: 'number', title: 'weight'},
           ],
@@ -83,15 +89,32 @@ export default {
     },
     {
       name: 'background',
-      type: 'string',
+      type: 'text',
       title: 'Background of the dessert',
     },
     {
       name: 'steps',
       type: 'array',
       title: 'Steps',
-      of: [{type: 'string'}],
+      group: 'step',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'stepDesc', type: 'string', title: 'text describtion of this step'},
+            {name: 'stepImg', type: 'image', title: 'image of this step'},
+          ],
+        },
+      ],
     },
+    {
+      title: 'Pre-typed recipes',
+      name: 'content',
+      type: 'array',
+      of: [{type: 'block'}],
+      group: 'pre',
+    },
+    {title: 'pdf version of recipe', name: 'pdf', type: 'file', group: 'pre'},
     {
       name: 'slug',
       type: 'slug',
@@ -99,6 +122,7 @@ export default {
       options: {
         source: 'name',
       },
+      description: 'Recommand to type by your self if your recipe is not english',
     },
   ],
 }
