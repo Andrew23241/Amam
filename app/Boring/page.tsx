@@ -5,7 +5,7 @@ import Image from "next/image";
 
 async function getData() {
   const query = `*[_type =="ingredients"]{name,descr,
-  "var":varients[]->{name,price,describe,"imgurl":image.asset->url}
+  "var":varients[]->{name,describe,"imgurl":image.asset->url}
   
   }`;
   const data = await client.fetch(query);
@@ -18,7 +18,7 @@ interface d {
   descr: string;
   var: {
     name: string;
-    price: { unitprice: number; minunit: number };
+
     describe: string;
     imgurl: string;
   }[];
@@ -30,7 +30,7 @@ export default async function Amamamam() {
   return (
     <div className="bg-white px-5 py-5">
       <div className=" mx-2 my-4">
-        <ol className="grid grid-cols-2 mx-3 my-3 ">
+        <ol className="grid lg:grid-cols-2 mx-3 my-3 ">
           {data.map((topic, id) => (
             <li key={id} className="my-2 mx-2 ">
               <h2 className="font-bold text-3xl">{topic.name}</h2>
@@ -41,10 +41,7 @@ export default async function Amamamam() {
                     <h5 className="font-semibold text-gray-500 text-2xl">
                       {d.name}
                     </h5>
-                    <span className="mr-5">
-                      最小單位:{d.price.minunit} {"  "}克
-                    </span>
-                    <span>售價 : {d.price.unitprice}</span>
+
                     <div className="flex flex-wrap">
                       <div className="my-2  mx-3 ">
                         <Image

@@ -3,7 +3,7 @@ import AddToBag from "@/components/AddToList";
 import ImageGallery from "@/components/ImageGallery";
 import { Star } from "lucide-react";
 async function getData(slug: string) {
-  const query = `*[_type =="recipe" && slug.current=="${slug}"][0]{ _id, name,difficulty,time,size,steps,ingredient,background,images,"slug":slug.current,"ing":ingredient[].ingr->{name,normprice}
+  const query = `*[_type =="recipe" && slug.current=="${slug}"][0]{ _id, name,difficulty,time,size,steps,ingredient,background,images,"slug":slug.current,"ing":ingredient[].ingr->{name}
       }`;
 
   const data = await client.fetch(query);
@@ -22,17 +22,12 @@ interface da {
   background: string;
   images: any;
   slug: string;
-  ing: { name: string; normprice: { size: number; price: number } }[];
+  ing: { name: string }[];
 }
 
 export default async function Recipe({ params }: { params: { slug: string } }) {
   const data: da = await getData(params.slug);
-  let p = 0.0;
-  data.ing.map(
-    (i, id) =>
-      (p += (i.normprice.price * data.ingredient[id].weight) / i.normprice.size)
-  );
-  p = p - (p % 1);
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
@@ -43,14 +38,12 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {data.name}
               </h2>
-              <h3 className="font-bold italic subpixel-antialliased">
-                Estimate Price: {p} NT
-              </h3>
+
               <div className="flex gap-2.5">
                 <AddToBag
                   description="cdvfv"
                   currency="USD"
-                  price={p}
+                  price={0}
                   price_id={data._id}
                   image={data.images[0]}
                   name={data.name}
