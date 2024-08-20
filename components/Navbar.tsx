@@ -37,8 +37,8 @@ export default function Navbar() {
                 className="absolute z-10 mt-2 w-36  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
               >
                 {links.map((link, idx) => (
-                  <div>
-                    <MenuItem key={idx}>
+                  <div key={idx}>
+                    <MenuItem>
                       {pathname === link.href ? (
                         <Link
                           className="text-lg font-semibold text-primary"
