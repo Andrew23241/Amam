@@ -4,11 +4,25 @@ import ImageGallery from "@/components/ImageGallery";
 import { Star } from "lucide-react";
 import Image from "next/image";
 async function getData(slug: string) {
-  const query = `*[_type =="recipe" && slug.current=="${slug}"][0]{ _id, name,difficulty,time,size,ingredient,background,images,"slug":slug.current,"ing":ingredient[].ingr->{name}
-     ,"step":steps[]{
-  "stepImg":stepImg.asset->url,
-  "stepText":stepDesc},
-  "pdf":pdf.asset->url}`;
+  const query = `*[_type =="recipe" && slug.current=="${slug}"][0]{ 
+  _id,
+   name,
+   difficulty,
+   
+   size,
+   ingredient,
+   background,
+   images,
+   "slug":slug.current,
+   "ing":ingredient[].ingr->{name},
+  "step":steps[]{
+        "stepImg":stepImg.asset->url,
+        "stepText":stepDesc},
+  "pdf":pdf.asset->url,
+  "cat":category->name,
+  makingtime,
+  key,
+  "heat":preheat{upperheat,downheat,heattime}}`;
 
   const data = await client.fetch(query);
 
@@ -19,7 +33,7 @@ interface da {
   _id: string;
   name: string;
   difficulty: number;
-  time: number;
+
   size: string;
 
   ingredient: { weight: number; ingrname: string }[];
@@ -29,6 +43,10 @@ interface da {
   ing: { name: string }[];
   step: { stepImg: any; stepText: string }[];
   pdf: any;
+  cat: string;
+  makingtime: number;
+  key: string;
+  heat: { upperheat: number; downheat: number; heattime: number };
 }
 
 export default async function Recipe({ params }: { params: { slug: string } }) {
@@ -61,26 +79,55 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               <object className="w-full h-screen" data={data.pdf}></object>
             ) : (
               <div>
-                <div className=" px-3 grid grid-rows-1 grid-cols-1 lg:grid-cols-3 ">
-                  <span className="px-1 ">
-                    <span className="  font-semibold text-gray-500 ">
-                      Difficulty :{" "}
+                <div className="flex">
+                  <div className=" mx-3  grid grid-rows-2 grid-cols-2 lg:w-2/3">
+                    <span className="mx-1 ">
+                      <span className="  font-semibold text-gray-500 ">
+                        Difficulty :{" "}
+                      </span>
+                      {[...Array(data.difficulty)].map((e, i) => (
+                        <div key={e} className="inline-block align-bottom">
+                          <Star />
+                        </div>
+                      ))}
                     </span>
-                    {[...Array(data.difficulty)].map((e, i) => (
-                      <div key={e} className="inline-block align-bottom">
-                        <Star />
-                      </div>
-                    ))}
-                  </span>
-                  <span className="px-1 ">
-                    <span className="font-semibold text-gray-500">Portion</span>
-                    : {data.size}{" "}
-                  </span>
-                  <span className="px-1 ">
-                    <span className="font-semibold text-gray-500">
-                      Expected Time : {data.time} minutes
+                    <div>
+                      <span className="font-semibold text-gray-500">Key:</span>{" "}
+                      {data.key}
+                    </div>
+                    <span className="mx-1 ">
+                      <span className="font-semibold text-gray-500">
+                        Portion
+                      </span>
+                      : {data.size}{" "}
                     </span>
-                  </span>
+                    <div>
+                      <span className="font-semibold text-gray-500">
+                        Category:
+                      </span>{" "}
+                      {data.cat}
+                    </div>
+                  </div>
+                  <div className="border px-2 py-2 mx-2 my-2 ">
+                    <div>
+                      <span className="font-semibold text-gray-500">
+                        Upper Heat:
+                      </span>{" "}
+                      {data.heat.upperheat}
+                    </div>{" "}
+                    <div>
+                      <span className="font-semibold text-gray-500">
+                        Lowwer Heat:
+                      </span>{" "}
+                      {data.heat.downheat}
+                    </div>{" "}
+                    <div>
+                      <span className="font-semibold text-gray-500">
+                        Heat Time:
+                      </span>{" "}
+                      {data.heat.heattime}
+                    </div>{" "}
+                  </div>
                 </div>
                 <div className="my-3">
                   <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
@@ -118,12 +165,14 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                         <li key={id} className="font-medium py-1 ">
                           {id + 1 + ". " + ing.stepText}
                           {ing.stepImg ? (
-                            <Image
-                              src={ing.stepImg}
-                              width={200}
-                              height={200}
-                              alt="demo"
-                            />
+                            <div className="grid place-items-center my-3">
+                              <Image
+                                src={ing.stepImg}
+                                width={200}
+                                height={200}
+                                alt="demo"
+                              />
+                            </div>
                           ) : (
                             <div></div>
                           )}

@@ -25,6 +25,7 @@ export default function Navbar() {
             AM<span className="text-primary">AM</span>
           </h1>
         </Link>
+
         <nav className="hidden gap-12 lg:flex 2xl:ml-16">
           {links.map((link, idx) => (
             <div key={idx}>
