@@ -6,22 +6,19 @@ import { useShoppingCart } from "use-shopping-cart";
 import { CakeSliceIcon, Search } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import { ChangeEvent, useState } from "react";
-import SearchBar from "./SearchBar";
+
 const links = [
   { name: "社課", href: "/Current" },
   { name: "阿姆阿姆", href: "/Amamamam" },
   { name: "商品預購", href: "/Sell" },
   { name: "服務學習", href: "/Service" },
   { name: "西點概論", href: "/Boring" },
+  { name: "食譜搜尋", href: "/Search" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [search, setsearch] = useState("Search for recipe ....");
-  const searchHandler = (value: string) => {
-    setsearch(value);
-  };
+
   const { handleCartClick } = useShoppingCart();
   return (
     <header className="mb-4 border-b">
@@ -72,7 +69,7 @@ export default function Navbar() {
             </h1>
           </Link>
         </div>
-        <SearchBar onSearch={searchHandler} />
+
         <nav className="hidden gap-12 lg:flex 2xl:ml-16">
           {links.map((link, idx) => (
             <div key={idx}>

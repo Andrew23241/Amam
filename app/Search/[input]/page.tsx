@@ -1,13 +1,11 @@
 import { client } from "@/lib/sanity";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 async function getData(input: string) {
-  const query = `*[_type=="recipe"&& name match "${input}" ]{
-  _id,
-    name,
-    "img":images[0].asset->url,
-      "slug":slug.current
-}`;
+  const query =
+    input +
+    ']{  _id,    name,    "img":images[0].asset->url,      "slug":slug.current}';
 
   const data = await client.fetch(query);
 
@@ -27,10 +25,55 @@ export default async function Searchpage({
   params: { input: string };
 }) {
   const inp = decodeURI(params.input);
-  const data: da[] = await getData(inp);
+  const na = inp.split("_")[0];
+  const want = inp.split("_");
+  const unwant = inp.split("-");
+  let fetch = '*[_type=="recipe"&& name match"' + na + '"';
+  if (want.length >= 3) {
+    want.map(
+      (n, i) =>
+        (fetch +=
+          i > 0 && i < want.length - 1
+            ? ' && references(*[(_type=="varient" || _type=="ingredients")&& name=="' +
+              n +
+              '" ]._id)'
+            : "")
+    );
+  }
+  if (unwant.length >= 2) {
+    unwant.map(
+      (n, i) =>
+        (fetch +=
+          i > 0
+            ? '&& !references(*[(_type=="varient" || _type=="ingredients")&& name=="' +
+              n +
+              '" ]._id)'
+            : "")
+    );
+  }
+
+  const data: da[] = await getData(fetch);
+
   return (
     <div className="bg-white">
-      <h1> All recipe with {inp} in name</h1>
+      <div className="flex flex-col items-center w-full">
+        <h1 className="my-1"> All recipe with {na} in name</h1>
+        <h1 className="my-1">
+          Wanted : {want.length < 3 ? "none" : ""}
+          {want.map((n, i) => (i > 0 && i < want.length - 1 ? n + "," : ""))}
+        </h1>
+        <h1 className="my-1">
+          un-Wanted:{unwant.length < 2 ? "none" : ""}
+          {unwant.map((n, i) => (i > 0 ? n + "," : ""))}
+        </h1>
+        <h1> Total {data.length} recipies satisfy </h1>
+        <div>
+          <Link href={"/Search"}>
+            <Button>Back to Search</Button>
+          </Link>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {data.map((recipe) => (

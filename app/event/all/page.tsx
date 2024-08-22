@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { client } from "@/lib/sanity";
-import { ArrowRight } from "lucide-react";
+
 import Image from "next/image";
 
 async function getData() {

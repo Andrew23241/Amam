@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { simplifiedProduct } from "../interface";
+
 import { client } from "@/lib/sanity";
 import Image from "next/image";
 

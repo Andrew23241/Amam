@@ -1,4 +1,4 @@
-import { client, urlFor } from "@/lib/sanity";
+import { client } from "@/lib/sanity";
 import Image from "next/image";
 async function getData(name: string) {
   const query = `*[_type=="person" && name=="${name}"][0]{

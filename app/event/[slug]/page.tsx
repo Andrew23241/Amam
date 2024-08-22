@@ -1,10 +1,8 @@
-import { fullProduct } from "@/app/interface";
 import { client, urlFor } from "@/lib/sanity";
-import { Button } from "@/components/ui/button";
-import { Star, Truck } from "lucide-react";
+
 import ImageGallery from "@/components/ImageGallery";
 import { Url } from "url";
-import Link from "next/link";
+
 import MemberButton from "@/components/MemeberButton";
 async function getData(slug: string) {
   //const s = slug === "all" ? "" : "&& slug.current=='" + slug + "'";

@@ -1,11 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useShoppingCart } from "use-shopping-cart";
-import { urlFor } from "../lib/sanity";
+
 import Link from "next/link";
-import Image from "next/image";
-import { Heading, LucidePersonStanding, PersonStanding } from "lucide-react";
 
 export interface buttondata {
   name: string;

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { urlFor } from "../lib/sanity";
+
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
