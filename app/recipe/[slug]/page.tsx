@@ -3,6 +3,7 @@ import AddToBag from "@/components/AddToList";
 import ImageGallery from "@/components/ImageGallery";
 import { Star } from "lucide-react";
 import Image from "next/image";
+
 async function getData(slug: string) {
   const query = `*[_type =="recipe" && slug.current=="${slug}"][0]{ 
   _id,
@@ -62,129 +63,125 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {data.name}
               </h2>
-
-              <div className="flex gap-2.5">
-                <AddToBag
-                  description="cdvfv"
-                  currency="USD"
-                  price={0}
-                  price_id={data._id}
-                  image={data.images[0]}
-                  name={data.name}
-                  key={data._id}
-                />
-              </div>
             </div>
-            {data.pdf ? (
-              <object className="w-full h-screen" data={data.pdf}></object>
-            ) : (
-              <div>
-                <div className="flex">
-                  <div className=" mx-3  grid grid-rows-2 grid-cols-2 lg:w-2/3">
-                    <span className="mx-1 ">
-                      <span className="  font-semibold text-gray-500 ">
-                        Difficulty :{" "}
-                      </span>
-                      {[...Array(data.difficulty)].map((e, i) => (
-                        <div key={e} className="inline-block align-bottom">
-                          <Star />
-                        </div>
-                      ))}
+
+            <div>
+              <div className="flex">
+                <div className=" mx-3  grid grid-rows-2 grid-cols-2 lg:w-2/3">
+                  <span className="mx-1 ">
+                    <span className="  font-semibold text-gray-500 ">
+                      Difficulty :{" "}
                     </span>
-                    <div>
-                      <span className="font-semibold text-gray-500">Key:</span>{" "}
-                      {data.key}
-                    </div>
-                    <span className="mx-1 ">
-                      <span className="font-semibold text-gray-500">
-                        Portion
-                      </span>
-                      : {data.size}{" "}
-                    </span>
-                    <div>
-                      <span className="font-semibold text-gray-500">
-                        Category:
-                      </span>{" "}
-                      {data.cat}
-                    </div>
-                  </div>
-                  <div className="border px-2 py-2 mx-2 my-2 ">
-                    <div>
-                      <span className="font-semibold text-gray-500">
-                        Upper Heat:
-                      </span>{" "}
-                      {data.heat.upperheat}
-                    </div>{" "}
-                    <div>
-                      <span className="font-semibold text-gray-500">
-                        Lowwer Heat:
-                      </span>{" "}
-                      {data.heat.downheat}
-                    </div>{" "}
-                    <div>
-                      <span className="font-semibold text-gray-500">
-                        Heat Time:
-                      </span>{" "}
-                      {data.heat.heattime}
-                    </div>{" "}
-                  </div>
-                </div>
-                <div className="my-3">
-                  <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
-                    Ingedients
-                  </h3>
-                  <ol className="grid  grid-cols-2 grid-rows-3 lg:grid-cols-3 mx-3">
-                    {data.ingredient.map((ing, id) => (
-                      <li
-                        key={id}
-                        className="italic font-medium grid grid-cols-3"
-                      >
-                        <div className="col-span-2">
-                          {id + 1 + ". " + ing.ingrname}
-                        </div>
-                        <div>{ing.weight + "g"}</div>
-                      </li>
+                    {[...Array(data.difficulty)].map((e, i) => (
+                      <div key={e} className="inline-block align-bottom">
+                        <Star />
+                      </div>
                     ))}
-                  </ol>
+                  </span>
+                  <div>
+                    <span className="font-semibold text-gray-500">Key:</span>{" "}
+                    {data.key}
+                  </div>
+                  <span className="mx-1 ">
+                    <span className="font-semibold text-gray-500">Portion</span>
+                    : {data.size}{" "}
+                  </span>
+                  <div>
+                    <span className="font-semibold text-gray-500">
+                      Category:
+                    </span>{" "}
+                    {data.cat}
+                  </div>
                 </div>
-                <div className="my-3">
-                  <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
-                    Backbround
-                  </h3>
-                  <p className="px-3 my-3 text-base text-gray-500 tracking-wide">
-                    {data.background}
-                  </p>
-                </div>
-                <div className="my-3">
-                  <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
-                    Steps
-                  </h3>
-                  {data.step ? (
-                    <ol className="grid  grid-cols-1 grid-rows-3  mx-3">
-                      {data.step.map((ing, id) => (
-                        <li key={id} className="font-medium py-1 ">
-                          {id + 1 + ". " + ing.stepText}
-                          {ing.stepImg ? (
-                            <div className="grid place-items-center my-3">
-                              <Image
-                                src={ing.stepImg}
-                                width={200}
-                                height={200}
-                                alt="demo"
-                              />
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </li>
-                      ))}
-                    </ol>
+                <div className="border px-2 py-2 mx-2 my-2 ">
+                  {data.heat.heattime > 0 ? (
+                    <div>
+                      <div>
+                        <span className="font-semibold text-gray-500">
+                          Upper Heat:
+                        </span>{" "}
+                        {data.heat.upperheat}
+                      </div>{" "}
+                      <div>
+                        <span className="font-semibold text-gray-500">
+                          Lowwer Heat:
+                        </span>{" "}
+                        {data.heat.downheat}
+                      </div>{" "}
+                      <div>
+                        <span className="font-semibold text-gray-500">
+                          Heat Time:
+                        </span>{" "}
+                        {data.heat.heattime}
+                      </div>{" "}
+                    </div>
                   ) : (
-                    <h3>no steps or file uploaded yet</h3>
+                    <div>Freeze for {-data.heat.heattime} hours</div>
                   )}
                 </div>
               </div>
-            )}
+              <div className="my-3">
+                <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
+                  Ingedients
+                </h3>
+                <ol className="grid  grid-cols-2 grid-rows-3 lg:grid-cols-3 mx-3">
+                  {data.ingredient.map((ing, id) => (
+                    <li
+                      key={id}
+                      className="italic font-medium grid grid-cols-3"
+                    >
+                      <div className="col-span-2">
+                        {id + 1 + ". " + ing.ingrname}
+                      </div>
+                      <div>{ing.weight + "g"}</div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div className="my-3">
+                <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
+                  Backbround
+                </h3>
+                <p className="px-3 my-3 text-base text-gray-500 tracking-wide">
+                  {data.background}
+                </p>
+              </div>
+              <div className="my-3">
+                <h3 className="pb-3 text-3xl font-semibold capitalize text-center">
+                  Steps
+                </h3>
+                {data.step ? (
+                  <ol className="grid  grid-cols-1 grid-rows-3  mx-3">
+                    {data.step.map((ing, id) => (
+                      <li key={id} className="font-medium py-1 ">
+                        {id + 1 + ". " + ing.stepText}
+                        {ing.stepImg ? (
+                          <div className="grid place-items-center my-3">
+                            <Image
+                              src={ing.stepImg}
+                              width={200}
+                              height={200}
+                              alt="demo"
+                            />
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <h3>no steps or file uploaded yet</h3>
+                )}
+              </div>
+              {data.pdf ? (
+                <div>
+                  <object className="w-full h-screen" data={data.pdf}></object>
+                </div>
+              ) : (
+                <div> </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

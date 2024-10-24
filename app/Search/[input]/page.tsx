@@ -28,7 +28,8 @@ export default async function Searchpage({
   const na = inp.split("_")[0];
   const want = inp.split("_");
   const unwant = inp.split("-");
-  let fetch = '*[_type=="recipe"&& name match"' + na + '"';
+  let fetch =
+    '*[_type=="recipe"' + (na.length ? '&& name match"' + na + '"' : " ");
   if (want.length >= 3) {
     want.map(
       (n, i) =>

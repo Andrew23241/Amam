@@ -12,11 +12,11 @@ function IngSelector(props: IngList) {
   const [want, setwant] = useState(emp);
   const [unwant, setunwant] = useState(emp);
   const initial = "Search for recipe ....";
-  const [search, setsearch] = useState(initial);
+  const [search, setsearch] = useState("");
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
 
-    target.value === "" ? setsearch(initial) : setsearch(target.value);
+    setsearch(target.value);
   };
   return (
     <div>
@@ -24,7 +24,7 @@ function IngSelector(props: IngList) {
       <div>
         <input
           name="serach"
-          placeholder={search}
+          placeholder="Search for Recipe" //{search}
           onChange={searchHandler}
           className="h-10 px-5 pr-10  border rounded-full text-sm focus:outline-none"
         ></input>

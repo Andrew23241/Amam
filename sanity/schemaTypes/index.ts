@@ -4,6 +4,7 @@ import eventCategory from './eventCategory'
 
 import ingredients from './ingredients'
 import intropage from './intropage'
+import newrecipe from './newrecipe'
 import person from './person'
 import recipe from './recipe'
 import tool from './tool'
@@ -19,4 +20,5 @@ export const schemaTypes = [
   ingredients,
   varients,
   tool,
+  newrecipe,
 ]
