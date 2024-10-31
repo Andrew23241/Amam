@@ -5,15 +5,15 @@ import { usePathname } from "next/navigation";
 import { useShoppingCart } from "use-shopping-cart";
 import { CakeSliceIcon, Search } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const links = [
   { name: "社課", href: "/Current" },
   { name: "阿姆阿姆", href: "/Amamamam" },
-  { name: "商品預購", href: "/Sell" },
-  { name: "服務學習", href: "/Service" },
+  //{ name: "商品預購", href: "/Sell" },
+  //{ name: "服務學習", href: "/Service" },
   { name: "西點概論", href: "/Boring" },
-  { name: "食譜搜尋", href: "/Search" },
+  //{ name: "食譜搜尋", href: "/Search" },
 ];
 
 export default function Navbar() {
@@ -92,17 +92,32 @@ export default function Navbar() {
           ))}
         </nav>
         <div className="flex divide-x border-r sm:border-l">
-          <Button
-            variant={"outline"}
-            onClick={() => handleCartClick()}
-            className="flex flex-col gap-y-1.5 h-12 w-12 sm:h-20 sm:w-20 md:h-24 md:w-24 rounded-none"
-          >
-            <CakeSliceIcon />
-            <span className="hidden text-xs font-semibold text-gray-500 sm:block">
-              Have a slice
-            </span>
-          </Button>
+          <Link href={"/Search"}>
+            <Button
+              variant={"outline"}
+              className="flex flex-col gap-y-1.5 h-12 w-12 sm:h-20 sm:w-20 md:h-24 md:w-24 rounded-none"
+            >
+              <MagnifyingGlassIcon />
+              <span className="hidden text-xs font-semibold text-gray-500 sm:block">
+                Search
+              </span>
+            </Button>
+          </Link>
         </div>
+        {false && (
+          <div className="flex divide-x border-r sm:border-l">
+            <Button
+              variant={"outline"}
+              onClick={() => handleCartClick()}
+              className="flex flex-col gap-y-1.5 h-12 w-12 sm:h-20 sm:w-20 md:h-24 md:w-24 rounded-none"
+            >
+              <CakeSliceIcon />
+              <span className="hidden text-xs font-semibold text-gray-500 sm:block">
+                Have a slice
+              </span>
+            </Button>
+          </div>
+        )}
       </div>
     </header>
   );

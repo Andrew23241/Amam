@@ -35,9 +35,10 @@ export default function ImageGallery({ images }: iAppProps) {
         <Image
           src={urlFor(bigImage).url()}
           alt="Photo"
-          width={500}
-          height={500}
-          className="h-full w-full object-cover object-center"
+          width={300}
+          height={300}
+          quality={100}
+          className="h-full  w-full object-cover object-center"
         />
       </div>
     </div>

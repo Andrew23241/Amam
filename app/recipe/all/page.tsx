@@ -1,7 +1,5 @@
 import Link from "next/link";
-
 import { client } from "@/lib/sanity";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 async function getData() {
@@ -34,13 +32,15 @@ export default async function Newest() {
           {data.map((recipe) => (
             <div key={recipe._id} className="group relative">
               <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
-                <Image
-                  src={recipe.imgurl}
-                  alt="recipe image"
-                  className="w-full h-full object-cover object-center lg:h-full lg:w-full"
-                  width={300}
-                  height={300}
-                />
+                <Link href={`/recipe/${recipe.slug}`}>
+                  <Image
+                    src={recipe.imgurl}
+                    alt="recipe image"
+                    className="w-full h-full object-cover object-center lg:h-full lg:w-full"
+                    width={300}
+                    height={300}
+                  />
+                </Link>
               </div>
 
               <div className="mt-4 flex justify-between">

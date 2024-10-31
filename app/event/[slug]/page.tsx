@@ -1,15 +1,12 @@
 import { client, urlFor } from "@/lib/sanity";
-
-import ImageGallery from "@/components/ImageGallery";
 import { Url } from "url";
-
 import MemberButton from "@/components/MemeberButton";
+import ImageCarousel from "@/components/ImageCarousel";
 async function getData(slug: string) {
-  //const s = slug === "all" ? "" : "&& slug.current=='" + slug + "'";
   const s = "&& slug.current=='" + slug + "'";
   const query = `*[_type == "event"  ${s}][0] {
         _id,name,date,
-          images,
+          "imgurl":images[].asset->url,
            "memberName":members[]->name,
           review,
           link,
@@ -30,7 +27,7 @@ interface eventdata {
   _id: string;
   name: string;
   date: any;
-  images: any;
+  imgurl: string[];
   memberName: string[];
   review: string;
   link: Url;
@@ -52,9 +49,13 @@ export default async function ProductPge({
         <div className="grid gap-8 md:grid-cols-2">
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
-              <ImageGallery images={data.images} />
+              <ImageCarousel imgUrl={data.imgurl} time={false} />
               {data.date}
+              <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
+                {data.name}
+              </h2>
               <div className="mb-0.5 inline-block text-gray-500 flex">
+                <h2>Attendance: </h2>
                 {data.memberName.map((nam, idx) => (
                   <div key={idx} className="text-sm text-gray-700">
                     <MemberButton
@@ -64,6 +65,9 @@ export default async function ProductPge({
                     />
                   </div>
                 ))}
+              </div>
+              <div>
+                <h3>Things we make: </h3>
                 {data.recipe.map((nam, idx) => (
                   <div key={idx} className="text-sm text-gray-700">
                     <MemberButton
@@ -74,13 +78,10 @@ export default async function ProductPge({
                   </div>
                 ))}
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                {data.name}
-              </h2>
             </div>
           </div>
 
-          <p className="mt-12 text-base text-gray-500 tracking-wide">
+          <p className="mt-6 text-base text-gray-500 tracking-wide">
             {data.review}
           </p>
         </div>
