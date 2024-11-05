@@ -54,11 +54,11 @@ export default async function ProductPge({
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {data.name}
               </h2>
-              <div className="mb-0.5 inline-block text-gray-500 flex">
-                <h2>Attendance: </h2>
+              <div className="mb-2 inline-block text-gray-500 flex align-text-bottom">
+                <h2 className="mr-2">Attendance: </h2>
                 {data.memberName ? (
                   data.memberName.map((nam, idx) => (
-                    <div key={idx} className="text-sm text-gray-700">
+                    <div key={idx} className="text-sm text-gray-700 ">
                       <MemberButton
                         name={nam}
                         href={"/member/" + nam}
