@@ -20,5 +20,5 @@ export const schemaTypes = [
   ingredients,
   varients,
   tool,
-  newrecipe,
+  //newrecipe,
 ]

@@ -5,16 +5,18 @@ export default {
   type: 'document',
   title: 'Recipe',
   groups: [
+    {name: 'head', tittle: 'Basic information'},
     {name: 'ingred', title: 'Ingredients'},
     {name: 'step', title: 'Steps'},
-    {name: 'pre', title: 'edit your self'},
+    {name: 'pre', title: 'uploads'},
   ],
   fields: [
-    {name: 'name', type: 'string', title: 'Name of the Recipe'},
+    {name: 'name', type: 'string', title: 'Name of the Recipe', group: 'head'},
     {
       name: 'difficulty',
       type: 'number',
       title: 'Difficulty',
+      group: 'head',
     },
     {
       name: 'category',
@@ -25,19 +27,15 @@ export default {
           type: 'category',
         },
       ],
+      group: 'head',
     },
-    {
-      name: 'makingtime',
-      type: 'number',
-      title: 'Estimation of Time to make',
-      description:
-        'Time use to mix, weight or other operation require focus.i.e, wiithout baking or frozen time.',
-    },
+
     {
       name: 'key',
       type: 'string',
       title: 'The key point(s) of this recipe to work',
       description: 'the part that is most easy to fuck up',
+      group: 'head',
     },
     {
       name: 'preheat',
@@ -46,19 +44,23 @@ export default {
       fields: [
         {name: 'upperheat', type: 'number', title: 'upperheat-temp'},
         {name: 'downheat', type: 'number', title: 'downheat-temp'},
-        {name: 'heattime', type: 'number', title: 'heat time'},
+        {name: 'heattime', type: 'number', title: 'heat time(min)'},
       ],
+      description: 'if require freeze instead of heat use negative time with hours',
+      group: 'head',
     },
     {
       name: 'size',
       type: 'string',
       title: 'The portion of the final outcome',
+      group: 'head',
     },
     {
       name: 'images',
       type: 'array',
       title: 'Image of the finall product',
       of: [{type: 'image'}],
+      group: 'pre',
     },
     {
       name: 'ingredient',
@@ -91,6 +93,7 @@ export default {
       name: 'background',
       type: 'text',
       title: 'Background of the dessert',
+      group: 'head',
     },
     {
       name: 'steps',
@@ -102,13 +105,13 @@ export default {
           type: 'object',
           fields: [
             {name: 'stepDesc', type: 'string', title: 'text describtion of this step'},
-            {name: 'stepImg', type: 'image', title: 'image of this step'},
+            {name: 'stepImg', type: 'image', title: 'image of this step(optional)'},
           ],
         },
       ],
     },
 
-    {title: 'pdf version of recipe', name: 'pdf', type: 'file', group: 'pre'},
+    {title: 'pdf version of recipe(optional)', name: 'pdf', type: 'file', group: 'pre'},
     {
       name: 'slug',
       type: 'slug',

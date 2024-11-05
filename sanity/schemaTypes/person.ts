@@ -11,12 +11,12 @@ export default {
     {
       name: 'image',
       type: 'image',
-      title: 'Images',
+      title: 'Image of this person',
     },
     {
       name: 'intro',
       type: 'text',
-      title: 'Intrduction',
+      title: 'Intrduction ',
     },
   ],
 }

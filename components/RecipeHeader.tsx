@@ -40,7 +40,7 @@ function RecipeHeader({
               Time: {time} min {heatup}/{heatdown}
             </span>
           ) : (
-            <span className="text-gray-600">freeze {time} min</span>
+            <span className="text-gray-600">freeze {-time} hr</span>
           )}
         </div>
         <div className="text-gray-600">Category: {category}</div>
