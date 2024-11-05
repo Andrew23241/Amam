@@ -56,27 +56,35 @@ export default async function ProductPge({
               </h2>
               <div className="mb-0.5 inline-block text-gray-500 flex">
                 <h2>Attendance: </h2>
-                {data.memberName.map((nam, idx) => (
-                  <div key={idx} className="text-sm text-gray-700">
-                    <MemberButton
-                      name={nam}
-                      href={"/member/" + nam}
-                      imageUrl={urlFor(data.mempic[idx]).url()}
-                    />
-                  </div>
-                ))}
+                {data.memberName ? (
+                  data.memberName.map((nam, idx) => (
+                    <div key={idx} className="text-sm text-gray-700">
+                      <MemberButton
+                        name={nam}
+                        href={"/member/" + nam}
+                        imageUrl={urlFor(data.mempic[idx]).url()}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div></div>
+                )}
               </div>
               <div>
                 <h3>Things we make: </h3>
-                {data.recipe.map((nam, idx) => (
-                  <div key={idx} className="text-sm text-gray-700">
-                    <MemberButton
-                      name={nam.name}
-                      href={"/recipe/" + nam.slug}
-                      imageUrl={urlFor(data.mempic[idx]).url()}
-                    />
-                  </div>
-                ))}
+                {data.recipe ? (
+                  data.recipe.map((nam, idx) => (
+                    <div key={idx} className="text-sm text-gray-700">
+                      <MemberButton
+                        name={nam.name}
+                        href={"/recipe/" + nam.slug}
+                        imageUrl={urlFor(data.mempic[idx]).url()}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           </div>

@@ -40,11 +40,11 @@ export default function ImageCarousel({ imgUrl, time }: d) {
             className="object-contain"
             alt="icon picture"
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-            //width={600}
+            sizes="(max-width: 400px) 100vw, (max-width: 400px) 80vw, 70vw"
+            //width={400}
             quality={100}
             priority
-            //height={600}
+            //height={400}
           />
         </div>
       </div>

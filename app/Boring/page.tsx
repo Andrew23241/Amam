@@ -36,25 +36,29 @@ export default async function Amamamam() {
               <h2 className="font-bold text-3xl">{topic.name}</h2>
               <p className="italic  my-1 mx-1 font-sans">{topic.descr}</p>
               <ol className="grid grid-cols-2">
-                {topic.var.map((d, _) => (
-                  <li key={_}>
-                    <h5 className="font-semibold text-gray-500 text-2xl">
-                      {d.name}
-                    </h5>
+                {topic.var ? (
+                  topic.var.map((d, _) => (
+                    <li key={_}>
+                      <h5 className="font-semibold text-gray-500 text-2xl">
+                        {d.name}
+                      </h5>
 
-                    <div className="flex flex-wrap">
-                      <div className="my-2  mx-3 ">
-                        <Image
-                          src={d.imgurl}
-                          width={300}
-                          height={300}
-                          alt="varpic"
-                        />
+                      <div className="flex flex-wrap">
+                        <div className="my-2  mx-3 ">
+                          <Image
+                            src={d.imgurl}
+                            width={300}
+                            height={300}
+                            alt="varpic"
+                          />
+                        </div>
+                        <p className="my-2  mx-3 ">{d.describe} </p>
                       </div>
-                      <p className="my-2  mx-3 ">{d.describe} </p>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  ))
+                ) : (
+                  <div></div>
+                )}
               </ol>
             </li>
           ))}
