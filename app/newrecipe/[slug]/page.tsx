@@ -91,10 +91,10 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
             <div>
               <div className="col-span-full md:col-span-4 bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
-                <ul className="columns-1 md:columns-2 lg:columns-3 gap-x-4 space-y-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 space-y-2">
                   {data.ingredient ? (
                     data.ingredient.map((comp, _) => (
-                      <div key={_}>
+                      <div key={_} className="grid-cols-1">
                         {data.ingredient.length > 1 && (
                           <h1 className="text-1xl font-semibold mb-2">
                             {comp.compname}:
@@ -113,7 +113,7 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                   ) : (
                     <div></div>
                   )}
-                </ul>
+                </div>
               </div>
 
               <div className="col-span-full md:col-span-8 bg-white rounded-lg shadow-sm p-6">
