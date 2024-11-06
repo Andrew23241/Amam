@@ -9,6 +9,7 @@ interface RecipeHeaderProps {
   heatup: number;
   heatdown: number;
   time: number;
+  k: string;
 }
 
 function RecipeHeader({
@@ -19,6 +20,7 @@ function RecipeHeader({
   heatup,
   heatdown,
   time,
+  k,
 }: RecipeHeaderProps) {
   return (
     <div className="col-span-full bg-white rounded-lg shadow-sm p-6">
@@ -44,6 +46,7 @@ function RecipeHeader({
           )}
         </div>
         <div className="text-gray-600">Category: {category}</div>
+        <div className="text-gray-600">Key: {k}</div>
       </div>
     </div>
   );

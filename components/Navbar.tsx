@@ -72,7 +72,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <nav className=" flex lg:flex gap-8  2xl:ml-16 mx-3">
+        <nav className=" flex lg:flex gap-8  2xl:ml-16 mx-2">
           {links.map((link, idx) => (
             <div key={idx}>
               {pathname === link.href ? (

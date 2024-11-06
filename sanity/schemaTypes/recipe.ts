@@ -13,6 +13,17 @@ export default {
   fields: [
     {name: 'name', type: 'string', title: 'Name of the Recipe', group: 'head'},
     {
+      name: 'slug',
+      type: 'slug',
+      title: 'slug',
+      group: 'head',
+      options: {
+        source: 'name',
+        slugify: (input) => decodeURI(input),
+      },
+      description: 'Recommand to type by your self if your recipe is not english',
+    },
+    {
       name: 'difficulty',
       type: 'number',
       title: 'Difficulty',
@@ -112,14 +123,5 @@ export default {
     },
 
     {title: 'pdf version of recipe(optional)', name: 'pdf', type: 'file', group: 'pre'},
-    {
-      name: 'slug',
-      type: 'slug',
-      title: 'slug',
-      options: {
-        source: 'name',
-      },
-      description: 'Recommand to type by your self if your recipe is not english',
-    },
   ],
 }

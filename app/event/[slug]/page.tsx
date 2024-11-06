@@ -2,13 +2,15 @@ import { client, urlFor } from "@/lib/sanity";
 import { Url } from "url";
 import MemberButton from "@/components/MemeberButton";
 import ImageCarousel from "@/components/ImageCarousel";
+import Image from "next/image";
+import Link from "next/link";
 async function getData(slug: string) {
-  const s = "&& slug.current=='" + slug + "'";
+  const s = "&& slug.current=='" + decodeURI(slug) + "'";
   const query = `*[_type == "event"  ${s}][0] {
         _id,name,date,
           "imgurl":images[].asset->url,
            "memberName":members[]->name,
-          review,
+          "review":review[]{context,"imgurl":pic.asset->url},
           link,
           "mempic":members[]->image,
           
@@ -29,8 +31,8 @@ interface eventdata {
   date: any;
   imgurl: string[];
   memberName: string[];
-  review: string;
-  link: Url;
+  review: { context: string; imgurl: string }[];
+  link: string;
   mempic: any;
   slug: string;
   recipe: { name: string; slug: string }[];
@@ -54,27 +56,15 @@ export default async function ProductPge({
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {data.name}
               </h2>
-              <div className="mb-2 inline-block text-gray-500 flex align-text-bottom">
-                <h2 className="mr-2">Attendance: </h2>
-                {data.memberName ? (
-                  data.memberName.map((nam, idx) => (
-                    <div key={idx} className="text-sm text-gray-700 ">
-                      <MemberButton
-                        name={nam}
-                        href={"/member/" + nam}
-                        imageUrl={urlFor(data.mempic[idx]).url()}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <div></div>
-                )}
-              </div>
+
               <div>
                 <h3>Things we make: </h3>
                 {data.recipe ? (
                   data.recipe.map((nam, idx) => (
-                    <div key={idx} className="text-sm text-gray-700">
+                    <div
+                      key={idx}
+                      className="text-sm text-gray-700 inline-block"
+                    >
                       <MemberButton
                         name={nam.name}
                         href={"/recipe/" + nam.slug}
@@ -86,11 +76,27 @@ export default async function ProductPge({
                   <div></div>
                 )}
               </div>
+              {data.link && <Link href={data.link}>{data.link}</Link>}
             </div>
           </div>
 
           <p className="mt-6 text-base text-gray-500 tracking-wide">
-            {data.review}
+            {data.review &&
+              data.review.map((par, _) => (
+                <div>
+                  <p>{par.context}</p>
+                  {par.imgurl && (
+                    <div className="justify-items-center">
+                      <Image
+                        src={par.imgurl}
+                        alt="pic"
+                        width={300}
+                        height={300}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
           </p>
         </div>
       </div>

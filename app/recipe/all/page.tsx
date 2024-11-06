@@ -3,9 +3,10 @@ import { client } from "@/lib/sanity";
 import Image from "next/image";
 
 async function getData() {
-  const query = `*[_type=='recipe'] | order(date desc){
+  const query = `*[_type=='recipe' ||_type=='newrecipe'] | order(date desc){
                  
         name,
+        _type,
         "imgurl":images[0].asset->url,
           "slug":slug.current
       }`;
@@ -17,6 +18,7 @@ async function getData() {
 interface recipedata {
   _id: string;
   name: string;
+  _type: string;
   imgurl: string;
 
   slug: string;
@@ -32,9 +34,9 @@ export default async function Newest() {
           {data.map((recipe) => (
             <div key={recipe._id} className="group relative">
               <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
-                <Link href={`/recipe/${recipe.slug}`}>
+                <Link href={`/${recipe._type}/${recipe.slug}`}>
                   <Image
-                    src={recipe.imgurl}
+                    src={recipe.imgurl || "/am/download.png"}
                     alt="recipe image"
                     className="w-full h-full object-cover object-center lg:h-full lg:w-full"
                     width={300}
@@ -46,7 +48,9 @@ export default async function Newest() {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <Link href={`/recipe/${recipe.slug}`}>{recipe.name}</Link>
+                    <Link href={`/${recipe._type}/${recipe.slug}`}>
+                      {recipe.name}
+                    </Link>
                   </h3>
                 </div>
               </div>

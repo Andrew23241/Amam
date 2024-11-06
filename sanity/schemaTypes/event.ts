@@ -46,8 +46,23 @@ export default {
 
     {
       name: 'review',
-      type: 'text',
+      type: 'array',
       title: 'Description of the event',
+      of: [
+        {
+          name: 'paragraph',
+          type: 'object',
+          title: 'paragraph',
+          description: 'one component is a section, you can plugin one image per section',
+          fields: [
+            {name: 'context', title: 'context', type: 'text'},
+            {name: 'pic', title: 'image', type: 'image'},
+          ],
+          preview: {
+            select: {title: 'context', subtitle: 'weight'},
+          },
+        },
+      ],
     },
 
     {
@@ -61,6 +76,7 @@ export default {
             {
               type: 'recipe',
             },
+            {type: 'newrecipe'},
           ],
         },
       ],
@@ -76,6 +92,7 @@ export default {
       title: 'slug',
       options: {
         source: 'name',
+        slugify: (input) => decodeURI(input),
       },
     },
   ],

@@ -1,29 +1,28 @@
 import { client } from "@/lib/sanity";
-import { Star } from "lucide-react";
+
 import Image from "next/image";
 import ImageCarousel from "@/components/ImageCarousel";
 import Hide from "@/components/Hide";
 import RecipeHeader from "@/components/RecipeHeader";
 
 async function getData(slug: string) {
-  const query = `*[(_type =="recipe" || _type=="newrecipe") && slug.current=="${decodeURI(slug)}"][0]{ 
-  _id,
+  const query = `*[_type =="newrecipe"  && slug.current=="${decodeURI(slug)}"][0]{ 
+   _id,
    name,
-   difficulty,   
+   difficulty,
+   
    size,
-   ingredient,
+   "ingredient":ingredients[],
    background,
    images,
    "slug":slug.current,
-   "ing":ingredient[].ingr->{name},
-  "step":steps[]{
-        "stepImg":stepImg.asset->url,
-        "stepText":stepDesc},
+   key,
+  "steps":steps[],
   "pdf":pdf.asset->url,
   "cat":category->name,
+ time,
   
-  key,
-  "heat":preheat{upperheat,downheat,heattime},
+ up,down,
   "imgurl":images[].asset->url}`;
 
   const data = await client.fetch(query);
@@ -32,24 +31,29 @@ async function getData(slug: string) {
 }
 
 interface da {
-  _id: string;
+  _id: number;
   name: string;
-  difficulty: number;
+  difficulty: any;
 
-  size: string;
+  size: any;
 
-  ingredient: { weight: number; ingrname: string }[];
-  background: string;
+  ingredient: {
+    compname: string;
+    ingr: { ingrname: string; weight: number }[];
+  }[];
+  background: any;
   images: any;
   slug: string;
-  ing: { name: string }[];
-  step: { stepImg: any; stepText: string }[];
-  pdf: any;
-  cat: string;
-
   key: string;
-  heat: { upperheat: number; downheat: number; heattime: number };
-  imgurl: string[];
+
+  steps: { sectionname: string; step: { stepImg: any; stepDesc: any }[] }[];
+  pdf: any;
+  cat: any;
+  time: any;
+
+  up: any;
+  down: any;
+  imgurl: any[];
 }
 
 export default async function Recipe({ params }: { params: { slug: string } }) {
@@ -59,9 +63,6 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 ">
-          {
-            //<ImageGallery images={data.images} />
-          }
           {data.imgurl ? (
             <ImageCarousel imgUrl={data.imgurl} time={false} />
           ) : (
@@ -69,13 +70,13 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
           )}
           <div className="md:py-8">
             <RecipeHeader
-              time={data.heat.heattime}
+              time={data.time}
               category={data.cat}
               title={data.name}
               difficulty={data.difficulty}
               portion={data.size}
-              heatdown={data.heat.downheat}
-              heatup={data.heat.upperheat}
+              heatdown={data.down}
+              heatup={data.up}
               k={data.key}
             ></RecipeHeader>
             {data.background ? (
@@ -92,13 +93,22 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
                 <ul className="columns-1 md:columns-2 lg:columns-3 gap-x-4 space-y-2">
                   {data.ingredient ? (
-                    data.ingredient.map((ingredient, _) => (
-                      <li key={_} className="flex justify-between">
-                        <span>{ingredient.ingrname}</span>
-                        <span className="text-gray-600">
-                          {ingredient.weight} g
-                        </span>
-                      </li>
+                    data.ingredient.map((comp, _) => (
+                      <div>
+                        {data.ingredient.length > 1 && (
+                          <h1 className="text-1xl font-semibold mb-2">
+                            {comp.compname}:
+                          </h1>
+                        )}
+                        {comp.ingr.map((ingredient, i) => (
+                          <li key={_} className="flex justify-between">
+                            <span>{ingredient.ingrname}</span>
+                            <span className="text-gray-600">
+                              {ingredient.weight} g
+                            </span>
+                          </li>
+                        ))}
+                      </div>
                     ))
                   ) : (
                     <div></div>
@@ -109,27 +119,34 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
               <div className="col-span-full md:col-span-8 bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-2xl font-semibold mb-6">Instructions</h2>
                 <ol className="space-y-6">
-                  {data.step ? (
-                    data.step.map((step, index) => (
-                      <li key={index} className="flex">
-                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
-                          {index + 1}
-                        </span>
-                        <div>
-                          <p>{step.stepText}</p>
-                          {step.stepImg && (
-                            <div className="justify-items-center">
-                              <Image
-                                src={step.stepImg}
-                                alt={`Step ${index + 1}`}
-                                className="mt-2 rounded-md"
-                                width={200}
-                                height={200}
-                              />
-                            </div>
-                          )}
+                  {data.steps ? (
+                    data.steps.map((s, index) => (
+                      <div>
+                        <div className="text-2xl font-semibold mb-4">
+                          {s.sectionname}
                         </div>
-                      </li>
+                        {s.step.map((stepp, _) => (
+                          <li key={_} className="flex">
+                            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
+                              {_ + 1}
+                            </span>
+                            <div>
+                              <p>{stepp.stepDesc}</p>
+                              {stepp.stepImg && (
+                                <div className="justify-items-center">
+                                  <Image
+                                    src={stepp.stepImg}
+                                    alt={`Step ${index + 1}`}
+                                    className="mt-2 rounded-md"
+                                    width={200}
+                                    height={200}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </li>
+                        ))}
+                      </div>
                     ))
                   ) : (
                     <div></div>

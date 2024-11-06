@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 async function getData() {
-  const query = `*[_type=='recipe'][0...4] | order(_createdAt desc){
+  const query = `*[_type=='recipe'||_type=='newrecipe'][0...4] | order(_createdAt desc){
         _id,     
         name,
         "imgurl":images[0].asset->url,
@@ -51,13 +51,15 @@ export default async function NewestR() {
             <div key={recipe._id} className="group relative">
               <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                 <Link href={`/recipe/${recipe.slug}`}>
-                  <Image
-                    src={recipe.imgurl}
-                    alt="recipe image"
-                    className="w-full max-w-lg h-full object-cover object-center lg:h-full lg:w-full"
-                    width={300}
-                    height={300}
-                  />
+                  {
+                    <Image
+                      src={recipe.imgurl || "/am/components/download.png"}
+                      alt="recipe image"
+                      className="w-full max-w-lg h-full object-cover object-center lg:h-full lg:w-full"
+                      width={300}
+                      height={300}
+                    />
+                  }
                 </Link>
               </div>
 
