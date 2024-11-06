@@ -94,14 +94,14 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                 <ul className="columns-1 md:columns-2 lg:columns-3 gap-x-4 space-y-2">
                   {data.ingredient ? (
                     data.ingredient.map((comp, _) => (
-                      <div>
+                      <div key={_}>
                         {data.ingredient.length > 1 && (
                           <h1 className="text-1xl font-semibold mb-2">
                             {comp.compname}:
                           </h1>
                         )}
                         {comp.ingr.map((ingredient, i) => (
-                          <li key={_} className="flex justify-between">
+                          <li key={i} className="flex justify-between">
                             <span>{ingredient.ingrname}</span>
                             <span className="text-gray-600">
                               {ingredient.weight} g
