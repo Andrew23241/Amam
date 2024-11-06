@@ -122,16 +122,18 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                   {data.steps ? (
                     data.steps.map((s, index) => (
                       <div key={index}>
-                        <div className="text-2xl font-semibold mb-4">
-                          {s.sectionname}
-                        </div>
+                        {data.steps.length > 1 && (
+                          <div className="text-2xl font-semibold mb-4">
+                            {s.sectionname}
+                          </div>
+                        )}
                         {s.step.map((stepp, _) => (
                           <li key={_} className="flex">
                             <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
                               {_ + 1}
                             </span>
                             <div>
-                              <p>{stepp.stepDesc}</p>
+                              <p className="my-2">{stepp.stepDesc}</p>
                               {stepp.stepImg && (
                                 <div className="justify-items-center">
                                   <Image

@@ -6,7 +6,7 @@ import Hide from "@/components/Hide";
 import RecipeHeader from "@/components/RecipeHeader";
 
 async function getData(slug: string) {
-  const query = `*[(_type =="recipe" || _type=="newrecipe") && slug.current=="${decodeURI(slug)}"][0]{ 
+  const query = `*[_type =="recipe"  && slug.current=="${decodeURI(slug)}"][0]{ 
   _id,
    name,
    difficulty,   

@@ -7,6 +7,7 @@ import Image from "next/image";
 async function getData() {
   const query = `*[_type=='recipe'||_type=='newrecipe'][0...4] | order(_createdAt desc){
         _id,     
+        _type,
         name,
         "imgurl":images[0].asset->url,
         "slug":slug.current
@@ -18,6 +19,7 @@ async function getData() {
 }
 interface recdata {
   _id: string;
+  _type: string;
   name: string;
   imgurl: string;
 
@@ -50,7 +52,7 @@ export default async function NewestR() {
           {data.map((recipe) => (
             <div key={recipe._id} className="group relative">
               <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
-                <Link href={`/recipe/${recipe.slug}`}>
+                <Link href={`/${recipe._type}/${recipe.slug}`}>
                   {
                     <Image
                       src={recipe.imgurl || "/am/components/download.png"}
@@ -66,7 +68,9 @@ export default async function NewestR() {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <Link href={`/recipe/${recipe.slug}`}>{recipe.name}</Link>
+                    <Link href={`/${recipe._type}/${recipe.slug}`}>
+                      {recipe.name}
+                    </Link>
                   </h3>
                 </div>
               </div>
