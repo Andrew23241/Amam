@@ -83,7 +83,7 @@ export default async function ProductPge({
           <p className="mt-6 text-base text-gray-500 tracking-wide">
             {data.review &&
               data.review.map((par, _) => (
-                <div>
+                <div key={_}>
                   <p>{par.context}</p>
                   {par.imgurl && (
                     <div className="justify-items-center">

@@ -121,7 +121,7 @@ export default async function Recipe({ params }: { params: { slug: string } }) {
                 <ol className="space-y-6">
                   {data.steps ? (
                     data.steps.map((s, index) => (
-                      <div>
+                      <div key={index}>
                         <div className="text-2xl font-semibold mb-4">
                           {s.sectionname}
                         </div>
